@@ -111,25 +111,6 @@ export function Dashboard() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-nanovita-green selection:text-black font-sans relative overflow-x-hidden bg-nanovita-wave">
       
-      {/* 3D Floating DNA Orb Graphic */}
-      <div className="hidden lg:block absolute top-28 left-[6%] w-56 h-56 pointer-events-none animate-3d-float z-10">
-        <Image 
-          src="/3d_dna.png" 
-          alt="3D DNA Helix" 
-          fill 
-          className="object-contain drop-shadow-[0_0_30px_rgba(130,236,6,0.3)]"
-        />
-      </div>
-
-      {/* 3D Floating Vault Shield Graphic */}
-      <div className="hidden lg:block absolute top-32 right-[6%] w-60 h-60 pointer-events-none animate-3d-float z-10" style={{ animationDelay: '-3.5s' }}>
-        <Image 
-          src="/3d_vault.png" 
-          alt="3D Vault Shield" 
-          fill 
-          className="object-contain drop-shadow-[0_0_30px_rgba(130,236,6,0.3)]"
-        />
-      </div>
 
       {/* TOP NAVIGATION BAR */}
       <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-2xl border-b border-nanovita-border/60 px-6 py-3.5">

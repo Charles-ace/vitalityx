@@ -26,19 +26,6 @@ body {
   background-repeat: no-repeat;
 }
 
-/* 3D floating animation */
-@keyframes float3D {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translateY(-16px) rotate(3deg) scale(1.03);
-  }
-}
-
-.animate-3d-float {
-  animation: float3D 7s ease-in-out infinite;
-}
 
 /* Glass card styling */
 .glass-pillar-card {
