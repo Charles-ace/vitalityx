@@ -6,8 +6,13 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "VitalityX | Web3 Wellness Companion",
-  description: "Gamified Lifestyle-to-Earn and AI Wellness Companion deployed on OKX X Layer.",
+  title: "VitalityX | AI Wellness & DeSci Yield Protocol on X Layer",
+  description: "Gamified Lifestyle-to-Earn (L2E) and AI Wellness Companion deployed on OKX X Layer EVM.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Providers>
           {children}

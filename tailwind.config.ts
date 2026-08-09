@@ -9,11 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        neon: {
-          blue: "#00f3ff",
-          green: "#39ff14",
+        background: "#060807",
+        foreground: "#ffffff",
+        nanovita: {
+          green: "#82ec06",
+          dark: "#0a0d0b",
+          card: "#0d110e",
+          border: "#1a231d",
+          muted: "#8a9a8f",
         }
       },
     },
