@@ -23,10 +23,7 @@ import {
   Cpu,
   Coins,
   BrainCircuit,
-  Settings,
-  TrendingUp,
-  Award,
-  Users
+  Settings
 } from 'lucide-react'
 
 const VITALITY_VAULT_ABI = [
@@ -112,19 +109,35 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#060807] text-white selection:bg-nanovita-green selection:text-black font-sans relative overflow-x-hidden scroll-smooth">
+    <div className="min-h-screen bg-black text-white selection:bg-nanovita-green selection:text-black font-sans relative overflow-x-hidden bg-nanovita-wave">
       
-      {/* Ambient Background Glow Waves */}
-      <div className="absolute top-0 right-0 w-[800px] h-[550px] bg-radial from-[#82ec06]/20 via-[#82ec06]/5 to-transparent blur-[140px] pointer-events-none rounded-full" />
-      <div className="absolute top-[40%] left-[-100px] w-[600px] h-[450px] bg-radial from-[#82ec06]/10 via-transparent to-transparent blur-[160px] pointer-events-none rounded-full" />
+      {/* 3D Floating DNA Orb Graphic */}
+      <div className="hidden lg:block absolute top-28 left-[6%] w-56 h-56 pointer-events-none animate-3d-float z-10">
+        <Image 
+          src="/3d_dna.png" 
+          alt="3D DNA Helix" 
+          fill 
+          className="object-contain drop-shadow-[0_0_30px_rgba(130,236,6,0.3)]"
+        />
+      </div>
+
+      {/* 3D Floating Vault Shield Graphic */}
+      <div className="hidden lg:block absolute top-32 right-[6%] w-60 h-60 pointer-events-none animate-3d-float z-10" style={{ animationDelay: '-3.5s' }}>
+        <Image 
+          src="/3d_vault.png" 
+          alt="3D Vault Shield" 
+          fill 
+          className="object-contain drop-shadow-[0_0_30px_rgba(130,236,6,0.3)]"
+        />
+      </div>
 
       {/* TOP NAVIGATION BAR */}
-      <header className="sticky top-0 z-50 bg-[#060807]/80 backdrop-blur-xl border-b border-nanovita-border/50 px-6 py-3.5">
+      <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-2xl border-b border-nanovita-border/60 px-6 py-3.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Generated Logo & Brand */}
+          {/* Logo */}
           <a href="#" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-nanovita-green/40 group-hover:border-nanovita-green shadow-[0_0_15px_rgba(130,236,6,0.3)] transition-all">
+            <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-nanovita-green/40 group-hover:border-nanovita-green shadow-[0_0_15px_rgba(130,236,6,0.4)] transition-all">
               <Image 
                 src="/logo.png" 
                 alt="VitalityX Logo" 
@@ -134,7 +147,6 @@ export function Dashboard() {
             </div>
             <span className="font-extrabold text-xl tracking-tight text-white flex items-center gap-1.5">
               Vitality<span className="text-nanovita-green">X</span>
-              <span className="text-[10px] text-nanovita-muted font-mono uppercase px-2 py-0.5 rounded-full bg-white/5 border border-white/10">X Layer</span>
             </span>
           </a>
 
@@ -148,16 +160,20 @@ export function Dashboard() {
 
           {/* Right Controls */}
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300">
+            <div className="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 cursor-pointer">
               <Globe className="w-4 h-4 text-nanovita-green" />
               <span>English</span>
               <ChevronDown className="w-3 h-3 text-gray-400" />
             </div>
 
+            <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:border-nanovita-green transition-colors cursor-pointer">
+              <User className="w-4 h-4" />
+            </div>
+
             {isConnected ? (
               <button 
                 onClick={() => disconnect()}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs tracking-wide shadow-[0_0_20px_rgba(130,236,6,0.4)] hover:shadow-[0_0_30px_rgba(130,236,6,0.7)] transition-all duration-300"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs tracking-wide shadow-[0_0_20px_rgba(130,236,6,0.5)] hover:shadow-[0_0_30px_rgba(130,236,6,0.8)] transition-all"
               >
                 <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
                 <span>{address?.slice(0, 6)}...{address?.slice(-4)}</span>
@@ -165,7 +181,7 @@ export function Dashboard() {
             ) : (
               <button 
                 onClick={() => connectors[0] && connect({ connector: connectors[0] })}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs tracking-wide shadow-[0_0_20px_rgba(130,236,6,0.4)] hover:scale-105 transition-all duration-300"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs tracking-wide shadow-[0_0_20px_rgba(130,236,6,0.5)] hover:scale-105 transition-all"
               >
                 <Settings className="w-4 h-4" />
                 <span>Connect Wallet</span>
@@ -175,27 +191,16 @@ export function Dashboard() {
         </div>
       </header>
 
-      {/* HERO SECTION */}
-      <section id="hero" className="pt-20 pb-16 px-6 max-w-7xl mx-auto text-center relative z-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-nanovita-green/10 border border-nanovita-green/30 text-nanovita-green text-xs font-semibold uppercase tracking-wider mb-8 animate-pulse">
-          <Sparkle className="w-4 h-4 fill-nanovita-green" />
-          <span>OKX Web3 Developer Challenge • X Layer EVM L2</span>
-        </div>
-
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-tight mb-8">
-          Gamified Wellness & <br />
-          <span className="text-nanovita-green">Biological AI Oracle</span>
-        </h1>
-
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-normal leading-relaxed mb-12">
-          Stake OKB into 7-day commitment vaults. Log daily health habits validated by AI and earn high-yield redistribution on OKX X Layer.
-        </p>
-
-        {/* Hero Pill Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+      {/* HERO SECTION (Exact NanoVita Center Layout) */}
+      <section id="hero" className="pt-24 pb-20 px-6 max-w-7xl mx-auto text-center relative z-20">
+        
+        {/* Dual Hero Pill Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4">
+          
+          {/* Explore Research Pill */}
           <a 
             href="#pillars"
-            className="flex items-center gap-3 px-8 py-4 rounded-full bg-[#060807] border-2 border-nanovita-green text-nanovita-green font-extrabold text-sm hover:bg-nanovita-green/10 transition-all duration-300 group"
+            className="flex items-center gap-3 px-8 py-3.5 rounded-full bg-black border-2 border-nanovita-green text-nanovita-green font-extrabold text-sm hover:bg-nanovita-green/10 transition-all group shadow-xl"
           >
             <span>Explore Research</span>
             <div className="w-8 h-8 rounded-full bg-nanovita-green/20 flex items-center justify-center text-nanovita-green group-hover:bg-nanovita-green group-hover:text-black transition-all">
@@ -203,122 +208,117 @@ export function Dashboard() {
             </div>
           </a>
 
-          <a 
-            href="#workspace"
-            className="flex items-center gap-3 px-8 py-4 rounded-full bg-nanovita-green text-black font-extrabold text-sm shadow-[0_0_30px_rgba(130,236,6,0.4)] hover:shadow-[0_0_40px_rgba(130,236,6,0.7)] hover:scale-105 transition-all duration-300 group"
-          >
-            <span>Enter Vault Workspace</span>
-            <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-nanovita-green">
-              <LinkIcon className="w-4 h-4" />
-            </div>
-          </a>
+          {/* Connect Wallet Pill */}
+          {isConnected ? (
+            <a 
+              href="#workspace"
+              className="flex items-center gap-3 px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-sm shadow-[0_0_30px_rgba(130,236,6,0.5)] hover:shadow-[0_0_45px_rgba(130,236,6,0.8)] hover:scale-105 transition-all group"
+            >
+              <span>Enter Vault Workspace</span>
+              <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-nanovita-green">
+                <LinkIcon className="w-4 h-4" />
+              </div>
+            </a>
+          ) : (
+            <button 
+              onClick={() => connectors[0] && connect({ connector: connectors[0] })}
+              className="flex items-center gap-3 px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-sm shadow-[0_0_30px_rgba(130,236,6,0.5)] hover:shadow-[0_0_45px_rgba(130,236,6,0.8)] hover:scale-105 transition-all group"
+            >
+              <span>Connect Wallet</span>
+              <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-nanovita-green">
+                <LinkIcon className="w-4 h-4" />
+              </div>
+            </button>
+          )}
         </div>
       </section>
 
-      {/* STATS SECTION */}
-      <section id="stats" className="py-10 border-y border-nanovita-border/50 bg-[#060807]/50 backdrop-blur-md relative z-10">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <p className="text-3xl lg:text-4xl font-black text-white mb-1">14,890 <span className="text-nanovita-green text-lg">OKB</span></p>
-            <p className="text-xs text-nanovita-muted font-semibold uppercase tracking-wider">Total Value Staked</p>
-          </div>
-          <div>
-            <p className="text-3xl lg:text-4xl font-black text-white mb-1">98.4<span className="text-nanovita-green text-lg">%</span></p>
-            <p className="text-xs text-nanovita-muted font-semibold uppercase tracking-wider">AI Proof Accuracy</p>
-          </div>
-          <div>
-            <p className="text-3xl lg:text-4xl font-black text-nanovita-green mb-1">+18.5<span className="text-white text-lg">%</span></p>
-            <p className="text-xs text-nanovita-muted font-semibold uppercase tracking-wider">DeSci Yield APR</p>
-          </div>
-          <div>
-            <p className="text-3xl lg:text-4xl font-black text-white mb-1">3,420<span className="text-nanovita-green text-lg">+</span></p>
-            <p className="text-xs text-nanovita-muted font-semibold uppercase tracking-wider">Active Health Stakers</p>
-          </div>
-        </div>
-      </section>
-
-      {/* "OUR FOUR PILLARS" SECTION */}
-      <section id="pillars" className="py-20 px-6 max-w-7xl mx-auto relative z-10">
-        <h2 className="text-center text-xs font-extrabold tracking-[0.3em] text-gray-300 uppercase mb-14">
+      {/* "OUR FOUR PILLARS" SECTION (Exact NanoVita Cards) */}
+      <section id="pillars" className="py-16 px-6 max-w-7xl mx-auto relative z-20">
+        <h2 className="text-center text-sm font-extrabold tracking-[0.25em] text-white uppercase mb-12">
           OUR FOUR PILLARS
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           
-          <div className="p-8 rounded-[32px] bg-[#0b0e0c] border border-nanovita-border/70 hover:border-nanovita-green transition-all duration-300 flex flex-col justify-between h-[340px] group shadow-lg hover:shadow-[0_0_30px_rgba(130,236,6,0.15)]">
+          {/* Pillar 1 */}
+          <div className="glass-pillar-card p-8 rounded-[32px] flex flex-col justify-between h-[320px] group shadow-2xl">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
-                <Cpu className="w-6 h-6" />
+              <div className="w-10 h-10 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
+                <Cpu className="w-5 h-5" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Nanotech Data</h3>
-              <p className="text-sm text-nanovita-muted font-normal leading-relaxed">
-                Real-time molecular & biometric interaction logs stored securely on X Layer.
+              <h3 className="text-xl font-bold text-white mb-2">Nanotech Data</h3>
+              <p className="text-xs text-nanovita-muted font-normal leading-relaxed">
+                Real-time molecular interaction logs stored on decentralized storage.
               </p>
             </div>
 
             <a 
               href="#workspace"
-              className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-black font-bold text-sm flex items-center justify-between hover:bg-nanovita-green transition-all group-hover:shadow-md"
+              className="mt-6 w-full py-3 px-5 rounded-full bg-white text-black font-bold text-xs flex items-center justify-between hover:bg-nanovita-green transition-all shadow-md"
             >
               <span>Explore</span>
               <ArrowRight className="w-4 h-4 text-black" />
             </a>
           </div>
 
-          <div className="p-8 rounded-[32px] bg-[#0b0e0c] border border-nanovita-border/70 hover:border-nanovita-green transition-all duration-300 flex flex-col justify-between h-[340px] group shadow-lg hover:shadow-[0_0_30px_rgba(130,236,6,0.15)]">
+          {/* Pillar 2 */}
+          <div className="glass-pillar-card p-8 rounded-[32px] flex flex-col justify-between h-[320px] group shadow-2xl">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
-                <BrainCircuit className="w-6 h-6" />
+              <div className="w-10 h-10 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
+                <BrainCircuit className="w-5 h-5" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">AI Models</h3>
-              <p className="text-sm text-nanovita-muted font-normal leading-relaxed">
-                Simulate biological responses with OpenAI & Gemini 2.5-powered Bio-intelligence.
+              <h3 className="text-xl font-bold text-white mb-2">AI Models</h3>
+              <p className="text-xs text-nanovita-muted font-normal leading-relaxed">
+                Simulate biological responses with Gemini 2.5-powered Bio-intelligence.
               </p>
             </div>
 
             <a 
               href="#workspace"
-              className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-black font-bold text-sm flex items-center justify-between hover:bg-nanovita-green transition-all group-hover:shadow-md"
+              className="mt-6 w-full py-3 px-5 rounded-full bg-white text-black font-bold text-xs flex items-center justify-between hover:bg-nanovita-green transition-all shadow-md"
             >
               <span>Explore</span>
               <ArrowRight className="w-4 h-4 text-black" />
             </a>
           </div>
 
-          <div className="p-8 rounded-[32px] bg-[#0b0e0c] border border-nanovita-border/70 hover:border-nanovita-green transition-all duration-300 flex flex-col justify-between h-[340px] group shadow-lg hover:shadow-[0_0_30px_rgba(130,236,6,0.15)]">
+          {/* Pillar 3 */}
+          <div className="glass-pillar-card p-8 rounded-[32px] flex flex-col justify-between h-[320px] group shadow-2xl">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
-                <Coins className="w-6 h-6" />
+              <div className="w-10 h-10 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
+                <Coins className="w-5 h-5" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">RWA Health Assets</h3>
-              <p className="text-sm text-nanovita-muted font-normal leading-relaxed">
-                Tokenize your verified health data into tradeable, yield-bearing assets on X Layer EVM.
+              <h3 className="text-xl font-bold text-white mb-2">RWA Health Assets</h3>
+              <p className="text-xs text-nanovita-muted font-normal leading-relaxed">
+                Tokenize your verified health data as tradeable, yield-bearing assets.
               </p>
             </div>
 
             <a 
               href="#workspace"
-              className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-black font-bold text-sm flex items-center justify-between hover:bg-nanovita-green transition-all group-hover:shadow-md"
+              className="mt-6 w-full py-3 px-5 rounded-full bg-white text-black font-bold text-xs flex items-center justify-between hover:bg-nanovita-green transition-all shadow-md"
             >
               <span>Explore</span>
               <ArrowRight className="w-4 h-4 text-black" />
             </a>
           </div>
 
-          <div className="p-8 rounded-[32px] bg-[#0b0e0c] border border-nanovita-border/70 hover:border-nanovita-green transition-all duration-300 flex flex-col justify-between h-[340px] group shadow-lg hover:shadow-[0_0_30px_rgba(130,236,6,0.15)]">
+          {/* Pillar 4 */}
+          <div className="glass-pillar-card p-8 rounded-[32px] flex flex-col justify-between h-[320px] group shadow-2xl">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
-                <Layers className="w-6 h-6" />
+              <div className="w-10 h-10 rounded-2xl bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green mb-6 group-hover:bg-nanovita-green group-hover:text-black transition-all">
+                <Layers className="w-5 h-5" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">DeSci Protocol</h3>
-              <p className="text-sm text-nanovita-muted font-normal leading-relaxed">
-                Stake OKB into decentralized 7-day commitment vaults with automated anti-slashing.
+              <h3 className="text-xl font-bold text-white mb-2">DeSci Protocol</h3>
+              <p className="text-xs text-nanovita-muted font-normal leading-relaxed">
+                Tokenize your verified health data as tradeable, yield-bearing assets.
               </p>
             </div>
 
             <a 
               href="#workspace"
-              className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-black font-bold text-sm flex items-center justify-between hover:bg-nanovita-green transition-all group-hover:shadow-md"
+              className="mt-6 w-full py-3 px-5 rounded-full bg-white text-black font-bold text-xs flex items-center justify-between hover:bg-nanovita-green transition-all shadow-md"
             >
               <span>Explore</span>
               <ArrowRight className="w-4 h-4 text-black" />
@@ -328,11 +328,10 @@ export function Dashboard() {
         </div>
       </section>
 
-      {/* INTUITIVE HABIT LOGGING WORKSPACE */}
-      <section id="workspace" className="py-16 px-6 max-w-5xl mx-auto relative z-10">
-        <div className="rounded-[36px] bg-[#0a0d0b] border border-nanovita-border/80 p-6 md:p-10 shadow-2xl backdrop-blur-2xl">
+      {/* METRICS & WORKSPACE */}
+      <section id="workspace" className="py-16 px-6 max-w-5xl mx-auto relative z-20">
+        <div className="rounded-[36px] bg-[#0a0d0b]/90 border border-nanovita-border p-6 md:p-10 shadow-2xl backdrop-blur-2xl">
           
-          {/* Workspace Tab Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-nanovita-border">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-nanovita-green/10 border border-nanovita-green/30 flex items-center justify-center text-nanovita-green">
@@ -340,11 +339,11 @@ export function Dashboard() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white">Vitality Vault Workspace</h3>
-                <p className="text-xs text-nanovita-muted">X Layer Testnet (Chain ID 195)</p>
+                <p className="text-xs text-nanovita-muted">OKX X Layer Testnet (Chain ID 195)</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 bg-black/60 p-1.5 rounded-full border border-nanovita-border">
+            <div className="flex items-center gap-2 bg-black/80 p-1.5 rounded-full border border-nanovita-border">
               <button 
                 onClick={() => setActiveTab('overview')}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${activeTab === 'overview' ? 'bg-nanovita-green text-black shadow-md' : 'text-gray-400 hover:text-white'}`}
@@ -366,36 +365,36 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* TAB 1: OVERVIEW */}
+          {/* OVERVIEW */}
           {activeTab === 'overview' && (
             <div className="pt-8 space-y-8 animate-in fade-in duration-500">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <div className="p-6 rounded-3xl bg-[#060807] border border-nanovita-border">
+                <div className="p-6 rounded-3xl bg-black/80 border border-nanovita-border">
                   <p className="text-xs font-semibold text-nanovita-muted mb-1">X Layer OKB Balance</p>
                   <p className="text-3xl font-extrabold text-nanovita-green">
                     {balanceData ? parseFloat(balanceData.formatted).toFixed(4) : '0.0000'} <span className="text-sm text-white">OKB</span>
                   </p>
                 </div>
 
-                <div className="p-6 rounded-3xl bg-[#060807] border border-nanovita-border">
+                <div className="p-6 rounded-3xl bg-black/80 border border-nanovita-border">
                   <p className="text-xs font-semibold text-nanovita-muted mb-1">Staked Commitment</p>
                   <p className="text-3xl font-extrabold text-white">
                     {isActive ? (parseFloat(amountStaked.toString()) / 1e18).toFixed(2) : '0.00'} <span className="text-sm text-nanovita-green">OKB</span>
                   </p>
                 </div>
 
-                <div className="p-6 rounded-3xl bg-[#060807] border border-nanovita-border">
+                <div className="p-6 rounded-3xl bg-black/80 border border-nanovita-border">
                   <p className="text-xs font-semibold text-nanovita-muted mb-1">Current Streak</p>
                   <p className="text-3xl font-extrabold text-white flex items-center gap-2">
                     <span>{isActive ? Number(daysCompleted) : 0}</span>
                     <span className="text-sm font-normal text-nanovita-muted">/ 7 Days</span>
-                    <Flame className="w-6 h-6 text-nanovita-green ml-auto" />
+                    <Flame className="w-6 h-6 text-nanovita-green ml-auto animate-bounce" />
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 rounded-3xl bg-[#060807] border border-nanovita-border space-y-4">
+              <div className="p-6 rounded-3xl bg-black/80 border border-nanovita-border space-y-4">
                 <div className="flex justify-between items-center text-sm font-bold">
                   <span>7-Day Streak Progress</span>
                   <span className="text-nanovita-green">{isActive ? Math.round((Number(daysCompleted) / 7) * 100) : 0}%</span>
@@ -412,14 +411,14 @@ export function Dashboard() {
                 {!isActive ? (
                   <button 
                     onClick={handleStake}
-                    className="px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-sm hover:scale-105 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)]"
+                    className="px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs hover:scale-105 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)]"
                   >
                     Stake 0.01 OKB to Activate Vault
                   </button>
                 ) : (
                   <button 
                     onClick={() => setActiveTab('log')}
-                    className="px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-sm hover:scale-105 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)] flex items-center gap-2"
+                    className="px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs hover:scale-105 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)] flex items-center gap-2"
                   >
                     <span>Log Today's Habit Proof</span>
                     <ArrowRight className="w-4 h-4" />
@@ -429,18 +428,18 @@ export function Dashboard() {
             </div>
           )}
 
-          {/* TAB 2: LOG HABIT */}
+          {/* LOG HABIT */}
           {activeTab === 'log' && (
             <div className="pt-8 space-y-6 animate-in fade-in duration-500">
               <div>
-                <h4 className="text-lg font-bold text-white mb-1">Submit Biometric / Habit Proof</h4>
+                <h4 className="text-base font-bold text-white mb-1">Submit Biometric / Habit Proof</h4>
                 <p className="text-xs text-nanovita-muted">Our AI Oracle verifies your proof text and generates a signed cryptographic signature on-chain.</p>
               </div>
 
               <form onSubmit={handleSubmitProof} className="space-y-5">
                 <textarea
                   disabled={!isActive || isVerifying || isTxLoading}
-                  className="w-full bg-[#060807] border border-nanovita-border rounded-2xl p-5 text-white placeholder-gray-600 focus:outline-none focus:border-nanovita-green transition-all h-36 text-sm resize-none disabled:opacity-50"
+                  className="w-full bg-black/80 border border-nanovita-border rounded-2xl p-5 text-white placeholder-gray-600 focus:outline-none focus:border-nanovita-green transition-all h-36 text-sm resize-none disabled:opacity-50"
                   placeholder="e.g., Completed 45 minutes of cardio, 10,000 steps recorded, and drank 3L water today..."
                   value={habitText}
                   onChange={(e) => setHabitText(e.target.value)}
@@ -455,7 +454,7 @@ export function Dashboard() {
                   <button
                     disabled={!isActive || isVerifying || isTxLoading || !habitText}
                     type="submit"
-                    className="px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)] flex items-center gap-2"
+                    className="px-8 py-3.5 rounded-full bg-nanovita-green text-black font-extrabold text-xs disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)] flex items-center gap-2"
                   >
                     {isVerifying ? (
                       <>Analyzing Proof via AI...</>
@@ -484,10 +483,10 @@ export function Dashboard() {
             </div>
           )}
 
-          {/* TAB 3: STAKE */}
+          {/* STAKE */}
           {activeTab === 'stake' && (
             <div className="pt-8 space-y-6 animate-in fade-in duration-500">
-              <div className="p-6 rounded-3xl bg-[#060807] border border-nanovita-border space-y-4">
+              <div className="p-6 rounded-3xl bg-black/80 border border-nanovita-border space-y-4">
                 <div className="flex items-center gap-3">
                   <Lock className="w-6 h-6 text-nanovita-green" />
                   <div>
@@ -504,7 +503,7 @@ export function Dashboard() {
                 <button 
                   disabled={isActive}
                   onClick={handleStake}
-                  className="w-full py-4 rounded-full bg-nanovita-green text-black font-extrabold text-sm hover:scale-[1.02] disabled:opacity-50 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)]"
+                  className="w-full py-4 rounded-full bg-nanovita-green text-black font-extrabold text-xs hover:scale-[1.02] disabled:opacity-50 transition-all shadow-[0_0_20px_rgba(130,236,6,0.4)]"
                 >
                   {isActive ? 'Vault Commitment Currently Active' : 'Confirm Stake 0.01 OKB'}
                 </button>
@@ -516,12 +515,12 @@ export function Dashboard() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 px-6 border-t border-nanovita-border/40 text-center text-xs text-nanovita-muted space-y-2">
+      <footer className="py-12 px-6 border-t border-nanovita-border/50 bg-black text-center text-xs text-nanovita-muted space-y-3 relative z-20">
         <div className="flex items-center justify-center gap-2 mb-2">
           <div className="relative w-6 h-6 rounded-lg overflow-hidden border border-nanovita-green/40">
             <Image src="/logo.png" alt="Logo" fill className="object-cover" />
           </div>
-          <span className="font-bold text-white">VitalityX</span>
+          <span className="font-extrabold text-white text-sm">VitalityX</span>
         </div>
         <p>© 2026 VitalityX Protocol • DeSci AI Wellness on OKX X Layer</p>
       </footer>

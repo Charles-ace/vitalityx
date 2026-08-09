@@ -7,7 +7,7 @@ html {
 }
 
 :root {
-  --background: #060807;
+  --background: #000000;
   --foreground: #ffffff;
 }
 
@@ -18,16 +18,53 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom glowing & pulse utilities */
-@keyframes glowPulse {
+/* Exact NanoVita background wave styling */
+.bg-nanovita-wave {
+  background-image: url('/nanovita_wave.png');
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+/* 3D floating animation */
+@keyframes float3D {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(130, 236, 6, 0.3);
+    transform: translateY(0px) rotate(0deg) scale(1);
   }
   50% {
-    box-shadow: 0 0 35px rgba(130, 236, 6, 0.7);
+    transform: translateY(-16px) rotate(3deg) scale(1.03);
   }
 }
 
-.animate-glow {
-  animation: glowPulse 3s infinite ease-in-out;
+.animate-3d-float {
+  animation: float3D 7s ease-in-out infinite;
+}
+
+/* Glass card styling */
+.glass-pillar-card {
+  background: rgba(10, 14, 11, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(26, 35, 29, 0.9);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-pillar-card:hover {
+  border-color: rgba(130, 236, 6, 0.6);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(130, 236, 6, 0.15);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a231d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #82ec06;
 }
