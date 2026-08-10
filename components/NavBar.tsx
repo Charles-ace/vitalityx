@@ -92,14 +92,6 @@ export function NavBar() {
               {link.label}
             </Link>
           ))}
-
-          {/* CTA button — separate from the indicator group */}
-          <Link
-            href="/goal"
-            className="btn-clinical-red ml-4 px-5 py-2 text-xs font-extrabold shadow-sm"
-          >
-            Start a Goal →
-          </Link>
         </nav>
 
         {/* Right: chain badge + wallet */}
