@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
@@ -22,20 +23,25 @@ export function NavBar() {
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-clinical-border">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-clinical-red text-white flex items-center justify-center font-extrabold text-lg shadow-sm">
-            V
-          </div>
-          <span className="font-extrabold text-lg tracking-tight text-clinical-text">
-            Vitality<span className="text-clinical-red">X</span>
-          </span>
+          <Image
+            src="/logo.png"
+            alt="VitalityX logo"
+            width={120}
+            height={32}
+            priority
+            className="h-8 w-auto object-contain"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/providers" className={linkClass('/providers')}>
-            Providers
+          <Link href="/goal" className={linkClass('/goal')}>
+            Goals
           </Link>
           <Link href="/dashboard" className={linkClass('/dashboard')}>
             Dashboard
+          </Link>
+          <Link href="/providers" className={linkClass('/providers')}>
+            Providers
           </Link>
           <Link href="/goal" className="btn-clinical-red px-5 py-2 text-xs font-extrabold shadow-sm">
             Start a Goal

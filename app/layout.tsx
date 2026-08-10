@@ -12,9 +12,11 @@ export const metadata: Metadata = {
   description:
     "Autonomous Wellness Procurement Agent on OKX X Layer. Evaluates ERC-8004 provider reputation signals, executes x402 payments, and independently verifies fulfillment proof on-chain.",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/logo.png",
+    icon: [
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    shortcut: '/favicon.png',
+    apple: '/logo.png',
   },
 };
 
