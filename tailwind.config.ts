@@ -9,15 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#060807",
-        foreground: "#ffffff",
-        nanovita: {
-          green: "#82ec06",
-          dark: "#0a0d0b",
-          card: "#0d110e",
-          border: "#1a231d",
-          muted: "#8a9a8f",
-        }
+        clinical: {
+          bg: "#F9F9F9",
+          card: "#FFFFFF",
+          border: "#E5E7EB",
+          text: "#111827",
+          muted: "#6B7280",
+          red: "#E8291C",
+          "red-dark": "#C41E1A",
+          "red-light": "#FDF2F2",
+        },
+      },
+      fontFamily: {
+        sans: [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
       },
     },
   },

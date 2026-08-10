@@ -6,8 +6,8 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "VitalityX | AI Wellness & DeSci Yield Protocol on X Layer",
-  description: "Gamified Lifestyle-to-Earn (L2E) and AI Wellness Companion deployed on OKX X Layer EVM.",
+  title: "VitalityX | Autonomous Wellness Procurement Agent on X Layer",
+  description: "Autonomous Wellness Procurement Agent on OKX X Layer. Evaluates ERC-8004 provider reputation signals, executes x402 payments, and independently verifies fulfillment proof on-chain.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
