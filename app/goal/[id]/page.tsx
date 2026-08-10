@@ -245,7 +245,7 @@ export default function GoalDetailPage() {
           <div>
             <h4 className="text-base font-bold text-clinical-text">Independent Verification Boundary</h4>
             <p className="text-xs text-clinical-muted mt-1 leading-relaxed">
-              Funds are locked in escrow. The provider's own “delivered” flag is never accepted as proof — the agent
+              Funds are locked in escrow. The provider&apos;s own &ldquo;delivered&rdquo; flag is never accepted as proof — the agent
               requires a real fulfillment record (courier scan, lab report reference, appointment id) tied to this
               goal before settling.
             </p>
