@@ -99,6 +99,10 @@ contract WellnessEscrow is ReentrancyGuard, Pausable, Ownable {
     function createGoal(address provider, bytes32 goalHash) external payable whenNotPaused nonReentrant returns (uint256) {
         if (provider == address(0)) revert InvalidProvider();
         if (msg.value == 0) revert IncorrectPaymentAmount();
+        if (address(registry) != address(0)) {
+            (address registered, , , , , , ) = registry.providers(provider);
+            if (registered == address(0)) revert InvalidProvider();
+        }
 
         uint256 goalId = nextGoalId++;
         uint256 timeoutAt = block.timestamp + TIMEOUT_DURATION;
