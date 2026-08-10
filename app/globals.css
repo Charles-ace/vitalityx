@@ -21,12 +21,32 @@ body {
   border: 1px solid #E5E7EB;
   border-radius: 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .clinical-card:hover {
-  border-color: #D1D5DB;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+  border-color: #E8291C20;
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(232,41,28,0.07);
+  transform: translateY(-3px);
+}
+
+/* Stat card pop on hover */
+.clinical-card.stat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 32px -4px rgba(232, 41, 28, 0.12);
+  border-color: rgba(232, 41, 28, 0.2);
+}
+
+/* Step card - icon glow on hover */
+.clinical-card.step-card:hover .step-icon {
+  background-color: #E8291C;
+  color: #FFFFFF;
+  transform: scale(1.1) rotate(-3deg);
+  box-shadow: 0 4px 14px rgba(232, 41, 28, 0.35);
+}
+
+.step-icon {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Badge pill */
@@ -46,11 +66,147 @@ body {
   font-weight: 700;
   border-radius: 9999px;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btn-clinical-red:hover {
   background-color: #C41E1A;
-  box-shadow: 0 4px 14px rgba(232, 41, 28, 0.25);
+  box-shadow: 0 4px 14px rgba(232, 41, 28, 0.30);
+  transform: translateY(-1px) scale(1.015);
+}
+
+.btn-clinical-red:active {
+  transform: scale(0.98);
+}
+
+/* ─── Video Card ─── */
+.video-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: pointer;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.video-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 40px -4px rgba(0,0,0,0.22);
+}
+
+.video-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.3s ease;
+}
+
+.video-card:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.75);
+}
+
+.video-card .play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.video-card:hover .play-btn {
+  opacity: 1;
+}
+
+.video-card .play-circle {
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
+}
+
+.video-card:hover .play-circle {
+  transform: scale(1.1);
+}
+
+.video-card .video-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 14px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+  transition: padding-bottom 0.3s ease;
+}
+
+.video-card:hover .video-label {
+  padding-bottom: 16px;
+}
+
+/* ─── Video Modal ─── */
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modalIn 0.25s ease both;
+}
+
+.video-modal-inner {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.video-modal-close:hover {
+  background: rgba(255,255,255,0.28);
 }
 
 /* Custom scrollbar */
@@ -66,4 +222,121 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #9CA3AF;
+}
+
+/* ─── Scroll Reveal Animations ─── */
+
+/* Base: elements start hidden and reveal on scroll */
+[data-animate] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-duration: 0.7s;
+}
+
+/* Revealed state applied by Intersection Observer */
+[data-animate].is-visible {
+  opacity: 1;
+  transform: none !important;
+}
+
+/* Variant: slide up from below */
+[data-animate="fade-up"] {
+  transform: translateY(32px);
+}
+
+/* Variant: slide in from left */
+[data-animate="fade-left"] {
+  transform: translateX(-28px);
+}
+
+/* Variant: slide in from right */
+[data-animate="fade-right"] {
+  transform: translateX(28px);
+}
+
+/* Variant: scale up slightly */
+[data-animate="scale-up"] {
+  transform: scale(0.94);
+}
+
+/* Staggered delay for grid children */
+[data-animate-delay="100"] { transition-delay: 0.1s; }
+[data-animate-delay="200"] { transition-delay: 0.2s; }
+[data-animate-delay="300"] { transition-delay: 0.3s; }
+[data-animate-delay="400"] { transition-delay: 0.4s; }
+[data-animate-delay="500"] { transition-delay: 0.5s; }
+[data-animate-delay="600"] { transition-delay: 0.6s; }
+
+/* Hero headline letter reveal */
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-animate {
+  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-animate-delay-1 { animation-delay: 0.15s; }
+.hero-animate-delay-2 { animation-delay: 0.3s; }
+.hero-animate-delay-3 { animation-delay: 0.45s; }
+.hero-animate-delay-4 { animation-delay: 0.6s; }
+
+/* Stat number count-up pulse */
+@keyframes statPulse {
+  0% { transform: scale(0.92); opacity: 0; }
+  60% { transform: scale(1.04); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+[data-animate="stat"] {
+  transform: scale(0.92);
+}
+
+[data-animate="stat"].is-visible {
+  animation: statPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Timeline connector line draw */
+@keyframes drawLine {
+  from { transform: scaleY(0); transform-origin: top; }
+  to   { transform: scaleY(1); transform-origin: top; }
+}
+
+.timeline-line-animated {
+  animation: drawLine 0.5s ease forwards;
+}
+
+/* Red accent bar slide-in */
+@keyframes barSlideIn {
+  from { transform: scaleX(0); transform-origin: left; opacity: 0; }
+  to   { transform: scaleX(1); transform-origin: left; opacity: 1; }
+}
+
+.accent-bar {
+  display: block;
+  height: 3px;
+  width: 48px;
+  background: #E8291C;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  opacity: 0;
+}
+
+.is-visible .accent-bar,
+.accent-bar.is-visible {
+  transform: scaleX(1);
+  opacity: 1;
 }

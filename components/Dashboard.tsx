@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
 import Link from 'next/link'
 import { useAccount, useConnect, useBalance, useReadContract, useWatchContractEvent } from 'wagmi'
 import { formatEther } from 'viem'
@@ -130,6 +131,9 @@ export function Dashboard() {
   const { connect, connectors } = useConnect()
   const localGoalIds = useLocalGoalIds()
 
+  // Attach scroll reveal observer
+  useScrollReveal()
+
   const { data: balanceData } = useBalance({ address })
   const { data: goalIdsData, refetch: refetchIds } = useReadContract({
     address: escrowAddress,
@@ -188,12 +192,13 @@ export function Dashboard() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-10">
-      <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+      <div className="flex flex-wrap items-end justify-between gap-4 mb-8" data-animate="fade-up">
         <div>
           <span className="badge-clinical px-3 py-1 rounded-full text-clinical-red font-bold text-xs uppercase tracking-wider">
             {address.slice(0, 6)}...{address.slice(-4)}
           </span>
-          <h1 className="text-3xl font-extrabold text-clinical-text mt-2 tracking-tight">Your Agent Dashboard</h1>
+          <span className="accent-bar mt-3" />
+          <h1 className="text-3xl font-extrabold text-clinical-text mt-1 tracking-tight">Your Agent Dashboard</h1>
           <p className="text-sm text-clinical-muted mt-1">Goals, verified spend and the permanent procurement trail.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -214,12 +219,12 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        <div className="clinical-card p-6">
+        <div className="clinical-card p-6" data-animate="stat" data-animate-delay="100">
           <span className="text-xs font-bold text-clinical-muted uppercase tracking-wider">Goals Completed</span>
           <p className="text-3xl md:text-4xl font-extrabold text-clinical-text mt-2">{allIds.length}</p>
           <p className="text-[11px] text-clinical-muted mt-1.5">Independent verification each</p>
         </div>
-        <div className="clinical-card p-6">
+        <div className="clinical-card p-6" data-animate="stat" data-animate-delay="200">
           <span className="text-xs font-bold text-clinical-muted uppercase tracking-wider">Total Escrowed Spend</span>
           <p className="text-3xl md:text-4xl font-extrabold text-clinical-text mt-2">
             {balanceData ? Number(formatEther(balanceData.value)).toFixed(3) : '0.000'}{' '}
@@ -227,14 +232,14 @@ export function Dashboard() {
           </p>
           <p className="text-[11px] text-clinical-muted mt-1.5">Wallet balance on X Layer (195)</p>
         </div>
-        <div className="clinical-card p-6">
+        <div className="clinical-card p-6" data-animate="stat" data-animate-delay="300">
           <span className="text-xs font-bold text-clinical-muted uppercase tracking-wider">Providers Evaluated</span>
           <p className="text-3xl md:text-4xl font-extrabold text-clinical-text mt-2">
             {providerCountData ? (providerCountData as unknown as unknown[]).length : '—'}
           </p>
           <p className="text-[11px] text-clinical-muted mt-1.5">Live ProviderRegistry listings</p>
         </div>
-        <div className="clinical-card p-6">
+        <div className="clinical-card p-6" data-animate="stat" data-animate-delay="400">
           <span className="text-xs font-bold text-clinical-muted uppercase tracking-wider">Verification Standard</span>
           <div className="flex items-center gap-2 mt-3">
             <ShieldCheck className="w-7 h-7 text-clinical-red" />
@@ -244,7 +249,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div className="clinical-card p-6 md:p-8 mt-8">
+      <div className="clinical-card p-6 md:p-8 mt-8" data-animate="fade-up" data-animate-delay="100">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-clinical-border">
           <div>
             <span className="text-xs font-bold text-clinical-red uppercase tracking-wider">Permanent On-Chain History</span>
