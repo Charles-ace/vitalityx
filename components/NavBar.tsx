@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import { Logo } from '@/components/Logo'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
@@ -54,15 +54,8 @@ export function NavBar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <Image
-            src="/logo.png"
-            alt="VitalityX logo"
-            width={120}
-            height={32}
-            priority
-            className="h-8 w-auto object-contain"
-          />
+        <Link href="/" aria-label="VitalityX Home">
+          <Logo size="md" />
         </Link>
 
         {/* Nav */}
