@@ -1,12 +1,15 @@
 'use client'
 
+import Image from 'next/image'
+
 interface LogoProps {
   className?: string
   iconOnly?: boolean
   size?: 'sm' | 'md' | 'lg'
+  useImage?: boolean
 }
 
-export function Logo({ className = '', iconOnly = false, size = 'md' }: LogoProps) {
+export function Logo({ className = '', iconOnly = false, size = 'md', useImage = true }: LogoProps) {
   const iconSizes = {
     sm: 'w-7 h-7',
     md: 'w-8 h-8',
@@ -21,46 +24,47 @@ export function Logo({ className = '', iconOnly = false, size = 'md' }: LogoProp
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      {/* Dynamic SVG Icon Emblem */}
+      {/* Brand Icon Emblem */}
       <div className={`relative flex items-center justify-center shrink-0 ${iconSizes[size]}`}>
-        <svg
-          viewBox="0 0 40 40"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full drop-shadow-sm transition-transform hover:scale-105"
-        >
-          {/* Rounded Hexagon / Shield base in clinical red with subtle gradient */}
-          <rect width="40" height="40" rx="10" fill="#E8291C" />
-          
-          {/* Subtle inner clinical grid motif */}
-          <path
-            d="M20 6V34M6 20H34"
-            stroke="white"
-            strokeOpacity="0.15"
-            strokeWidth="1"
-            strokeDasharray="2 2"
+        {useImage ? (
+          <Image
+            src="/app-logo.png"
+            alt="VitalityX Logo"
+            width={40}
+            height={40}
+            className="w-full h-full object-contain rounded-lg drop-shadow-sm transition-transform hover:scale-105"
           />
-
-          {/* Sharp 'V' Emblem */}
-          <path
-            d="M11 13L20 28L29 13"
-            stroke="white"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-
-          {/* Cross/Pulse Accent intersecting the right side of the V */}
-          <path
-            d="M25 18H33M29 14V22"
-            stroke="#FFFFFF"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-
-          {/* Spark/Pulse core dot */}
-          <circle cx="20" cy="28" r="1.5" fill="white" />
-        </svg>
+        ) : (
+          <svg
+            viewBox="0 0 40 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full drop-shadow-sm transition-transform hover:scale-105"
+          >
+            <rect width="40" height="40" rx="10" fill="#E8291C" />
+            <path
+              d="M20 6V34M6 20H34"
+              stroke="white"
+              strokeOpacity="0.15"
+              strokeWidth="1"
+              strokeDasharray="2 2"
+            />
+            <path
+              d="M11 13L20 28L29 13"
+              stroke="white"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M25 18H33M29 14V22"
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+            <circle cx="20" cy="28" r="1.5" fill="white" />
+          </svg>
+        )}
       </div>
 
       {!iconOnly && (
@@ -75,3 +79,4 @@ export function Logo({ className = '', iconOnly = false, size = 'md' }: LogoProp
     </div>
   )
 }
+

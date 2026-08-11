@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Search, Award, Lock, ShieldCheck, ArrowRight, Check, X, FileCheck2 } from 'lucide-react'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { WellnessVideos } from '@/components/WellnessVideos'
+import { TextReveal } from '@/components/TextReveal'
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1920&q=80'
@@ -80,8 +81,8 @@ export default function Home() {
           <span className="badge-clinical px-3.5 py-1 rounded-full text-clinical-red font-bold text-xs uppercase tracking-wider hero-animate">
             OKX X Layer — Autonomous Agent Track
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-clinical-text mt-5 tracking-tight leading-[1.05] hero-animate hero-animate-delay-1">
-            Your wellness, procured and verified by an agent.
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-clinical-text mt-5 tracking-tight leading-[1.05]">
+            <TextReveal text="Your wellness, procured and verified by an agent." staggerMs={25} delayMs={150} />
           </h1>
           <p className="text-base sm:text-lg text-clinical-muted mt-5 leading-relaxed max-w-2xl hero-animate hero-animate-delay-2">
             Tell VitalityX what you want — better sleep, a baseline blood panel, a recovery routine. The agent shops
