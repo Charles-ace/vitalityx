@@ -17,9 +17,13 @@ import {
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { WellnessVideos } from '@/components/WellnessVideos'
 import { TextReveal } from '@/components/TextReveal'
+import { TypewriterReveal } from '@/components/TypewriterReveal'
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1920&q=80'
+
+const HERO_VIDEO =
+  'https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d6/Waves_of_the_sea_%28Video%29.webm/Waves_of_the_sea_%28Video%29.webm.720p.vp9.webm'
 
 const steps = [
   {
@@ -176,11 +180,8 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-[40px] relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
           <div className="md:w-1/2 flex flex-col items-start space-y-6">
             <h1 className="serenity-font-headline text-[36px] sm:text-[48px] md:text-[56px] leading-[1.12] font-extrabold text-[#0f5238] tracking-tight">
-              <TextReveal
-                text="Reclaim Your Vitality. Procured & Verified."
-                staggerMs={28}
-                delayMs={100}
-              />
+              <span>Reclaim Your </span>
+              <TypewriterReveal words={['Vitality', 'Strength', 'Health']} typingSpeed={85} pauseDuration={2200} />
             </h1>
 
             <p className="text-[17px] sm:text-[18px] leading-[28px] text-[#404943] max-w-xl hero-animate hero-animate-delay-2">
@@ -217,18 +218,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="md:w-1/2 mt-8 md:mt-0 w-full aspect-[4/3] rounded-2xl overflow-hidden ambient-shadow relative border border-white/60" data-animate="scale-up">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover rounded-2xl"
-              poster={HERO_IMAGE}
-            >
-              <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-on-a-beach-at-sunset-41445-large.mp4" type="video/mp4" />
-              <source src="https://cdn.coverr.co/videos/coverr-meditation-and-yoga-at-sunset-5233/1080p.mp4" type="video/mp4" />
-            </video>
+          {/* Hero Serenity Video Loop Container */}
+          <div className="md:w-1/2 mt-8 md:mt-0 w-full aspect-[4/3] rounded-2xl overflow-hidden ambient-shadow relative border border-white/60 bg-black" data-animate="scale-up">
+            <iframe
+              className="w-full h-full object-cover scale-150 pointer-events-none rounded-2xl"
+              src="https://www.youtube-nocookie.com/embed/v7AYKMP6rOE?autoplay=1&mute=1&loop=1&playlist=v7AYKMP6rOE&controls=0&playsinline=1&showinfo=0&rel=0&modestbranding=1"
+              title="Serenity Wellness Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
           </div>
         </div>
       </section>
