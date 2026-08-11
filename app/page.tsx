@@ -175,16 +175,11 @@ export default function Home() {
       <section className="relative pt-12 md:pt-20 pb-16 md:pb-24 overflow-hidden bg-[#eaf5ff]">
         <div className="max-w-[1200px] mx-auto px-5 md:px-[40px] relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
           <div className="md:w-1/2 flex flex-col items-start space-y-6">
-            <span className="badge-clinical px-3.5 py-1.5 rounded-full text-[#0f5238] bg-[#b1f0ce]/40 border border-[#b1f0ce] font-bold text-xs uppercase tracking-wider hero-animate flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#0f5238]" />
-              OKX X Layer — Autonomous Agent Track
-            </span>
-
-            <h1 className="serenity-font-headline text-[32px] sm:text-[44px] md:text-[52px] leading-[1.12] font-extrabold text-[#0f5238] tracking-tight">
+            <h1 className="serenity-font-headline text-[36px] sm:text-[48px] md:text-[56px] leading-[1.12] font-extrabold text-[#0f5238] tracking-tight">
               <TextReveal
-                text="Reclaim Your Vitality. Procured & Verified."
-                staggerMs={28}
-                delayMs={120}
+                text="Reclaim Your Vitality"
+                staggerMs={35}
+                delayMs={100}
               />
             </h1>
 
