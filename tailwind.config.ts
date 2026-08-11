@@ -10,14 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         clinical: {
-          bg: "#F9F9F9",
+          bg: "#f6faff",
           card: "#FFFFFF",
-          border: "#E5E7EB",
-          text: "#111827",
-          muted: "#6B7280",
-          red: "#E8291C",
-          "red-dark": "#C41E1A",
-          "red-light": "#FDF2F2",
+          border: "#dff0ff",
+          text: "#001e2e",
+          muted: "#404943",
+          red: "#0f5238",
+          "red-dark": "#0a3a28",
+          "red-light": "#eaf5ff",
+          primary: "#0f5238",
+          "primary-fixed": "#b1f0ce",
+          secondary: "#356668",
         },
       },
       fontFamily: {
