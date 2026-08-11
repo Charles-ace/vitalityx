@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Logo } from '@/components/Logo'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { Globe, ChevronDown, Check, Wallet } from 'lucide-react'
+import { useAccount, useConnect, useDisconnect, useChainId, useSwitchChain } from 'wagmi'
+import { Globe, ChevronDown, Check, Wallet, ToggleLeft, ToggleRight } from 'lucide-react'
 
 const NAV_LINKS = [
   { href: '/goal', label: 'Start a Goal' },
@@ -19,12 +19,24 @@ export function NavBar() {
   const { address, isConnected } = useAccount()
   const { connect, connectors } = useConnect()
   const { disconnect } = useDisconnect()
+
+  const chainId = useChainId()
+  const { switchChain } = useSwitchChain()
+
+  const [selectedChainId, setSelectedChainId] = useState<number>(195)
+  const [networkMenuOpen, setNetworkMenuOpen] = useState(false)
   const [walletOpen, setWalletOpen] = useState(false)
   const [showConnectModal, setShowConnectModal] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (chainId) {
+      setSelectedChainId(chainId)
+    }
+  }, [chainId])
 
   // ── Page-select indicator ──────────────────────────────────────────
   const navRef = useRef<HTMLElement>(null)
@@ -55,6 +67,18 @@ export function NavBar() {
 
   const isActive = (href: string) => pathname?.startsWith(href)
 
+  const handleSwitchNetwork = (targetChainId: number) => {
+    setSelectedChainId(targetChainId)
+    setNetworkMenuOpen(false)
+    if (switchChain) {
+      try {
+        switchChain({ chainId: targetChainId })
+      } catch {
+        /* chain switch handled locally */
+      }
+    }
+  }
+
   const handleConnectWallet = async (connectorToUse?: any) => {
     try {
       setShowConnectModal(false)
@@ -74,6 +98,8 @@ export function NavBar() {
       console.error('Wallet connect error:', err)
     }
   }
+
+  const activeChainLabel = selectedChainId === 196 ? 'X Layer Mainnet (196)' : 'X Layer Testnet (195)'
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#dff0ff]">
@@ -112,13 +138,62 @@ export function NavBar() {
           ))}
         </nav>
 
-        {/* Right: chain badge + wallet */}
+        {/* Right: network toggle + wallet */}
         <div className="flex items-center gap-3">
-          <span className="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-[#eaf5ff] text-[#356668]">
-            <Globe className="w-3.5 h-3.5 text-[#0f5238]" />
-            <span>X Layer (195)</span>
-          </span>
+          
+          {/* X Layer Network Toggle Button & Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setNetworkMenuOpen((v) => !v)}
+              className="flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full bg-[#eaf5ff] hover:bg-[#dff0ff] text-[#356668] transition-all border border-[#dff0ff] shadow-sm"
+              title="Click to switch X Layer Network"
+            >
+              <Globe className="w-3.5 h-3.5 text-[#0f5238]" />
+              <span>{activeChainLabel}</span>
+              <ChevronDown className="w-3 h-3 text-[#404943]" />
+            </button>
 
+            {networkMenuOpen && (
+              <div className="absolute right-0 mt-2 w-56 rounded-xl bg-white border border-[#dff0ff] shadow-xl p-2 z-50 space-y-1">
+                <div className="px-2 pt-1 pb-1 text-[10px] font-bold text-[#404943] uppercase tracking-wider flex items-center justify-between">
+                  <span>Switch Network</span>
+                  <span className="text-[9px] text-[#0f5238] font-mono">OKX X Layer</span>
+                </div>
+                
+                <button
+                  onClick={() => handleSwitchNetwork(195)}
+                  className={`w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-lg transition-all border ${
+                    selectedChainId === 195
+                      ? 'bg-[#0f5238] text-white border-[#0f5238]'
+                      : 'text-[#001e2e] bg-[#f6faff] hover:bg-[#eaf5ff] border-[#dff0ff]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    <span>X Layer Testnet</span>
+                  </div>
+                  <span className="text-[10px] opacity-80 font-mono">195</span>
+                </button>
+
+                <button
+                  onClick={() => handleSwitchNetwork(196)}
+                  className={`w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-lg transition-all border ${
+                    selectedChainId === 196
+                      ? 'bg-[#0f5238] text-white border-[#0f5238]'
+                      : 'text-[#001e2e] bg-[#f6faff] hover:bg-[#eaf5ff] border-[#dff0ff]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                    <span>X Layer Mainnet</span>
+                  </div>
+                  <span className="text-[10px] opacity-80 font-mono">196</span>
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Wallet connection */}
           <div className="relative">
             {mounted && isConnected && address ? (
               <button
@@ -154,7 +229,7 @@ export function NavBar() {
                 <p className="px-3 pb-2 text-xs font-mono text-[#001e2e] break-all">{address}</p>
                 <div className="px-3 pb-2 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700">
                   <Check className="w-3 h-3" />
-                  X Layer Testnet (OKB)
+                  {activeChainLabel}
                 </div>
                 <button
                   onClick={() => {

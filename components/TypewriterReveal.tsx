@@ -11,7 +11,7 @@ interface TypewriterRevealProps {
 }
 
 export function TypewriterReveal({
-  words = ['Vitality', 'Strength', 'Health'],
+  words = ['Vitality.', 'Strength.', 'Health.'],
   typingSpeed = 85,
   deletingSpeed = 45,
   pauseDuration = 2200,
@@ -49,13 +49,15 @@ export function TypewriterReveal({
     return () => clearTimeout(timer)
   }, [displayedText, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseDuration])
 
-  // Calculate max character length to reserve stable min-width
-  const maxWordLen = Math.max(...words.map((w) => w.length))
-
   return (
     <span
-      className={`inline-inline-flex items-baseline text-[#0f5238] font-extrabold text-left min-w-[${maxWordLen}ch] ${className}`}
-      style={{ minWidth: `${maxWordLen + 0.5}ch` }}
+      className={`inline-block align-bottom text-[#0f5238] font-extrabold text-left min-w-[9.5ch] sm:min-w-[10.5ch] select-none ${className}`}
+      style={{
+        display: 'inline-block',
+        verticalAlign: 'bottom',
+        textAlign: 'left',
+        whiteSpace: 'nowrap',
+      }}
     >
       <span>{displayedText}</span>
       <span className="inline-block w-[3px] h-[0.8em] bg-[#0f5238] ml-0.5 animate-pulse rounded-sm align-middle" />
