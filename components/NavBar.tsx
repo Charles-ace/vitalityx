@@ -5,7 +5,7 @@ import { Logo } from '@/components/Logo'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { Globe, ChevronDown, Check } from 'lucide-react'
+import { Globe, ChevronDown, Check, Wallet } from 'lucide-react'
 
 const NAV_LINKS = [
   { href: '/goal', label: 'Start a Goal' },
@@ -15,10 +15,16 @@ const NAV_LINKS = [
 
 export function NavBar() {
   const pathname = usePathname()
+  const [mounted, setMounted] = useState(false)
   const { address, isConnected } = useAccount()
   const { connect, connectors } = useConnect()
   const { disconnect } = useDisconnect()
   const [walletOpen, setWalletOpen] = useState(false)
+  const [showConnectModal, setShowConnectModal] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // ── Page-select indicator ──────────────────────────────────────────
   const navRef = useRef<HTMLElement>(null)
@@ -49,8 +55,28 @@ export function NavBar() {
 
   const isActive = (href: string) => pathname?.startsWith(href)
 
+  const handleConnectWallet = async (connectorToUse?: any) => {
+    try {
+      setShowConnectModal(false)
+      const targetConnector =
+        connectorToUse ||
+        connectors.find((c) => c.id === 'okxWallet' || c.name?.toLowerCase().includes('okx')) ||
+        connectors[0]
+
+      if (targetConnector) {
+        connect({ connector: targetConnector })
+      } else if (typeof window !== 'undefined' && (window as any).ethereum) {
+        await (window as any).ethereum.request({ method: 'eth_requestAccounts' })
+      } else {
+        alert('No Web3 wallet extension found. Please install OKX Wallet or MetaMask.')
+      }
+    } catch (err) {
+      console.error('Wallet connect error:', err)
+    }
+  }
+
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-clinical-border">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#dff0ff]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
@@ -63,7 +89,7 @@ export function NavBar() {
           {/* Sliding active indicator pill */}
           <div
             ref={indicatorRef}
-            className="absolute bottom-[-17px] left-0 h-[2px] bg-clinical-red rounded-full opacity-0"
+            className="absolute bottom-[-17px] left-0 h-[2px] bg-[#0f5238] rounded-full opacity-0"
             style={{ transition: 'width 0.35s cubic-bezier(0.16,1,0.3,1), transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease' }}
           />
 
@@ -74,13 +100,12 @@ export function NavBar() {
               ref={(el) => { linkRefs.current[i] = el }}
               className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
                 isActive(link.href)
-                  ? 'text-clinical-text bg-gray-50'
-                  : 'text-clinical-muted hover:text-clinical-text hover:bg-gray-50/70'
+                  ? 'text-[#0f5238] bg-[#eaf5ff]'
+                  : 'text-[#404943] hover:text-[#0f5238] hover:bg-[#eaf5ff]/60'
               }`}
             >
-              {/* Dot indicator on active */}
               {isActive(link.href) && (
-                <span className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-clinical-red" />
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#0f5238]" />
               )}
               {link.label}
             </Link>
@@ -89,52 +114,76 @@ export function NavBar() {
 
         {/* Right: chain badge + wallet */}
         <div className="flex items-center gap-3">
-          <span className="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-gray-100 text-clinical-muted">
-            <Globe className="w-3.5 h-3.5 text-clinical-red" />
+          <span className="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-[#eaf5ff] text-[#356668]">
+            <Globe className="w-3.5 h-3.5 text-[#0f5238]" />
             <span>X Layer (195)</span>
           </span>
 
           <div className="relative">
-            {isConnected && address ? (
+            {mounted && isConnected && address ? (
               <button
                 onClick={() => setWalletOpen((v) => !v)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-bold text-clinical-text transition-colors"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#eaf5ff] hover:bg-[#dff0ff] text-xs font-bold text-[#001e2e] transition-colors"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
                 <span>{address.slice(0, 6)}...{address.slice(-4)}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-clinical-muted" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#404943]" />
               </button>
             ) : (
               <button
                 onClick={() => {
-                  const okx = connectors.find((c) => c.id === 'okxWallet') ?? connectors[0]
-                  connect({ connector: okx })
+                  if (connectors.length > 1) {
+                    setShowConnectModal((v) => !v)
+                  } else {
+                    handleConnectWallet()
+                  }
                 }}
-                className="btn-clinical-red px-5 py-2 text-xs font-extrabold shadow-sm"
+                className="bg-[#0f5238] text-white hover:bg-[#2d6a4f] px-5 py-2.5 rounded-full text-xs font-extrabold shadow-sm transition-all flex items-center gap-1.5"
               >
-                Connect OKX Wallet
+                <Wallet className="w-3.5 h-3.5" />
+                <span>Connect Wallet</span>
               </button>
             )}
 
+            {/* Wallet Dropdown when connected */}
             {walletOpen && isConnected && (
-              <div className="absolute right-0 mt-2 w-64 rounded-xl bg-white border border-clinical-border shadow-lg p-2 z-50">
-                <p className="px-3 pt-2 pb-1 text-[10px] font-bold text-clinical-muted uppercase tracking-wider">
+              <div className="absolute right-0 mt-2 w-64 rounded-xl bg-white border border-[#dff0ff] shadow-lg p-2 z-50">
+                <p className="px-3 pt-2 pb-1 text-[10px] font-bold text-[#404943] uppercase tracking-wider">
                   Connected Wallet
                 </p>
-                <p className="px-3 pb-2 text-xs font-mono text-clinical-text break-all">{address}</p>
-                <div className="px-3 pb-2 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
+                <p className="px-3 pb-2 text-xs font-mono text-[#001e2e] break-all">{address}</p>
+                <div className="px-3 pb-2 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700">
                   <Check className="w-3 h-3" />
-                  OKX Wallet / X Layer Testnet
+                  X Layer Testnet (OKB)
                 </div>
                 <button
                   onClick={() => {
                     disconnect()
                     setWalletOpen(false)
                   }}
-                  className="w-full text-left px-3 py-2 text-xs font-bold text-clinical-red hover:bg-red-50 rounded-lg transition-colors"
+                  className="w-full text-left px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   Disconnect
                 </button>
+              </div>
+            )}
+
+            {/* Connector Selection Modal */}
+            {showConnectModal && !isConnected && (
+              <div className="absolute right-0 mt-2 w-64 rounded-xl bg-white border border-[#dff0ff] shadow-xl p-3 z-50 space-y-2">
+                <p className="text-xs font-bold text-[#0f5238] px-1 uppercase tracking-wider">
+                  Select Wallet Provider
+                </p>
+                {connectors.map((c) => (
+                  <button
+                    key={c.uid || c.id}
+                    onClick={() => handleConnectWallet(c)}
+                    className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold text-[#001e2e] bg-[#f6faff] hover:bg-[#eaf5ff] rounded-lg transition-colors border border-[#dff0ff]"
+                  >
+                    <span>{c.name || 'Browser Wallet'}</span>
+                    <Check className="w-3.5 h-3.5 text-[#0f5238] opacity-60" />
+                  </button>
+                ))}
               </div>
             )}
           </div>

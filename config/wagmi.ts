@@ -23,8 +23,7 @@ export const xLayerTestnet = defineChain({
 export const config = createConfig({
   chains: [xLayerTestnet],
   connectors: [
-    injected({ target: 'okxWallet' }), // Prioritize OKX Wallet
-    injected(), // Fallback to other injected wallets (MetaMask, etc.)
+    injected(),
   ],
   transports: {
     [xLayerTestnet.id]: http(),

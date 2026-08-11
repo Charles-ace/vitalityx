@@ -177,8 +177,8 @@ export default function Home() {
           <div className="md:w-1/2 flex flex-col items-start space-y-6">
             <h1 className="serenity-font-headline text-[36px] sm:text-[48px] md:text-[56px] leading-[1.12] font-extrabold text-[#0f5238] tracking-tight">
               <TextReveal
-                text="Reclaim Your Vitality"
-                staggerMs={35}
+                text="Reclaim Your Vitality. Procured & Verified."
+                staggerMs={28}
                 delayMs={100}
               />
             </h1>
@@ -218,13 +218,17 @@ export default function Home() {
           </div>
 
           <div className="md:w-1/2 mt-8 md:mt-0 w-full aspect-[4/3] rounded-2xl overflow-hidden ambient-shadow relative border border-white/60" data-animate="scale-up">
-            <Image
-              src={HERO_IMAGE}
-              alt="Serenity health and vitality embodiment"
-              fill
-              priority
-              className="object-cover rounded-2xl"
-            />
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover rounded-2xl"
+              poster={HERO_IMAGE}
+            >
+              <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-on-a-beach-at-sunset-41445-large.mp4" type="video/mp4" />
+              <source src="https://cdn.coverr.co/videos/coverr-meditation-and-yoga-at-sunset-5233/1080p.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </section>
