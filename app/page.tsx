@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   Search,
@@ -17,6 +18,9 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { WellnessVideos } from '@/components/WellnessVideos'
 import { TextReveal } from '@/components/TextReveal'
 import { TypewriterReveal } from '@/components/TypewriterReveal'
+
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1920&q=80'
 
 const steps = [
   {
